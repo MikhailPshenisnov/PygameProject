@@ -31,8 +31,8 @@ second_level_text_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.
 final_window_bg = None
 
 # Шрифты
-title_font = pygame.font.Font("data/19363.ttf", 30)
-text_font = pygame.font.Font("data/19363.ttf", 20)
+title_font = pygame.font.Font("data/Fonts/19363.ttf", 30)
+text_font = pygame.font.Font("data/Fonts/19363.ttf", 20)
 
 # Игра
 running = True
