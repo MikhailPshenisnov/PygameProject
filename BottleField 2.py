@@ -37,6 +37,16 @@ class NoBottle(Bottle):
         super().__init__("", "", "")
 
 
+# Родительский класс для всех кнопок (возможно будет переписан и для некоторых спрайтов)
+class UniversalButton(pygame.sprite.Sprite):
+    def __init__(self, group, image, x, y):
+        super().__init__(group)
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+
 pygame.init()
 
 # Создание окна
