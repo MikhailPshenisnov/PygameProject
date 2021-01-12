@@ -1,5 +1,42 @@
 import pygame
 
+
+class Bottle:
+    def __init__(self, text, icon_path, half_icon_path):
+        self.text = text
+        self.icon_path = icon_path
+        self.half_icon_path = half_icon_path
+
+
+class VBottle(Bottle):
+    def __init__(self):
+        super().__init__("V", "data/PngFiles/Bottles/Bottle1.png",
+                         "data/PngFiles/Bottles/Bottle11.png")
+
+
+class EthanolBottle(Bottle):
+    def __init__(self):
+        super().__init__("E", "data/PngFiles/Bottles/Bottle2.png",
+                         "data/PngFiles/Bottles/Bottle22.png")
+
+
+class SolventBottle(Bottle):
+    def __init__(self):
+        super().__init__("S", "data/PngFiles/Bottles/Bottle3.png",
+                         "data/PngFiles/Bottles/Bottle33.png")
+
+
+class MedicineBottle(Bottle):
+    def __init__(self):
+        super().__init__("M", "data/PngFiles/Bottles/Bottle4.png",
+                         "data/PngFiles/Bottles/Bottle44.png")
+
+
+class NoBottle(Bottle):
+    def __init__(self):
+        super().__init__("", "", "")
+
+
 pygame.init()
 
 # Создание окна
