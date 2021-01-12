@@ -47,6 +47,58 @@ class UniversalButton(pygame.sprite.Sprite):
         self.rect.y = y
 
 
+# Кнопка "Начать игру" / "Продолжить" (запускает 1 уровень если нет сохраненного прогресса,
+# запускает уровень (этап уровня) на котором игрок остановился если есть сохраненный прогресс,
+# открывает окно выбора уровня если игра была пройдена)
+class PlayButton(UniversalButton):
+    def __init__(self, group, image, x, y):
+        super().__init__(group, image, x, y)
+
+    def update(self, *args):
+        global first_level_text_flag, start_window_flag, game_progress
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos) and start_window_flag:
+            if args[0].button == 1:
+                if game_progress == 0:
+                    start_window_flag = False
+                    first_level_text_flag = True
+                elif game_progress == 1:
+                    pass
+                elif game_progress == 2:
+                    pass
+                print("PlayBtn")
+
+
+# Кнопка "Инфо" (запускает окно с общей информацией об игре)
+class InfoButton(UniversalButton):
+    def __init__(self, group, image, x, y):
+        super().__init__(group, image, x, y)
+
+    def update(self, *args):
+        global info_window_flag, start_window_flag
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos) and start_window_flag:
+            if args[0].button == 1:
+                start_window_flag = False
+                info_window_flag = True
+                print("InfoBtn")
+
+
+# Кнопка "Достижения" (запускает окно с достижениями)
+class AchievementsButton(UniversalButton):
+    def __init__(self, group, image, x, y):
+        super().__init__(group, image, x, y)
+
+    def update(self, *args):
+        global achievements_window_flag, start_window_flag
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos) and start_window_flag:
+            if args[0].button == 1:
+                start_window_flag = False
+                achievements_window_flag = True
+                print("AchievementsBtn")
+
+
 pygame.init()
 
 # Создание окна
@@ -77,9 +129,17 @@ second_level_text_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.
 # Второй уровень должен генерироваться сам
 final_window_bg = None
 
+# Кнопки стартового экрана
+start_window_buttons = pygame.sprite.Group()
+PlayButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn/PlayBtn.png"), 590, 400)
+InfoButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn/InfoBtn.png"), 700, 400)
+AchievementsButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn/AchBtn.png"), 480, 400)
+
 # Шрифты
 title_font = pygame.font.Font("data/Fonts/19363.ttf", 30)
 text_font = pygame.font.Font("data/Fonts/19363.ttf", 20)
+
+game_progress = 0
 
 # Игра
 running = True
@@ -94,6 +154,9 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
                 start_window_flag = False
+            start_window_buttons.update(event)
+        screen.blit(start_window_bg, (0, 0))
+        start_window_buttons.draw(screen)
         pygame.display.flip()
 
     # Окно с общей информацией
@@ -106,6 +169,7 @@ while running:
                 if event.key == pygame.K_SPACE:
                     start_window_flag = True
                     info_window_flag = False
+        screen.blit(info_window_bg, (0, 0))
         pygame.display.flip()
 
     # Окно с достижениями
@@ -118,6 +182,7 @@ while running:
                 if event.key == pygame.K_SPACE:
                     start_window_flag = True
                     achievements_window_flag = False
+        screen.blit(achievements_window_bg, (0, 0))
         pygame.display.flip()
 
     # Обучение для первого уровня
@@ -133,6 +198,7 @@ while running:
                 elif event.key == pygame.K_ESCAPE:
                     start_window_flag = True
                     first_level_text_flag = False
+        screen.blit(first_level_text_bg, (0, 0))
         pygame.display.flip()
 
     # Первый уровень
@@ -141,12 +207,17 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
                 first_level_flag = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    start_window_flag = True
+                    first_level_flag = False
 
             # Временный выход с первого уровня
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 first_level_flag = False
                 start_window_flag = True
 
+        screen.blit(first_level_bg, (0, 0))
         pygame.display.flip()
 
     # Обучение для второго уровня
