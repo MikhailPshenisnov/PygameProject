@@ -20,6 +20,20 @@ second_level_2_flag = False
 second_level_3_flag = False
 final_window_flag = False
 
+# Задние фоны окон
+start_window_bg = pygame.image.load("data/PngFiles/Windows/StartWindow.png")
+info_window_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
+achievements_window_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
+first_level_text_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
+first_level_bg = pygame.image.load("data/PngFiles/Windows/MainWindow.png")
+second_level_text_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
+# Второй уровень должен генерироваться сам
+final_window_bg = None
+
+# Шрифты
+title_font = pygame.font.Font("data/19363.ttf", 30)
+text_font = pygame.font.Font("data/19363.ttf", 20)
+
 # Игра
 running = True
 while running:
