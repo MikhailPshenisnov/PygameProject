@@ -480,6 +480,65 @@ def restart_second_level(part_num):
         player = generate_level(load_level("data/TxtFiles/Second_Level_3.txt"))
 
 
+# Выдает достижение
+def give_achievement(ach_num):
+    with open("data/TxtFiles/Achievements.txt", "r", encoding="utf8") as file:
+        text = list(file.read().split("\n")[0])
+    text[ach_num - 1] = "1"
+    with open("data/TxtFiles/Achievements.txt", "w", encoding="utf8") as file:
+        file.write("".join(text))
+
+
+#
+def update_achievements_flags():
+    global no_death_flag, no_damage_flag
+    with open("data/TxtFiles/AchievementsFlags.txt", "w", encoding="utf8") as file:
+        file.write(f"NoDamage-{no_damage_flag}\nNoDeath-{no_death_flag}")
+
+
+# Проверяет наличие достижений и меняет изображение при наличии/отсутствии достижения
+def check_achievements():
+    global achievement_1, achievement_2, achievement_3, achievement_4, achievement_5, achievement_6
+    with open("data/TxtFiles/Achievements.txt", "r", encoding="utf8") as file:
+        ach = file.read().split("\n")[0]
+    for i in range(len(ach)):
+        if ach[i] == "1":
+            if i + 1 == 1:
+                achievement_1.image = pygame.image.load("data/PngFiles/Achievements/Ach1.png")
+            elif i + 1 == 2:
+                achievement_2.image = pygame.image.load("data/PngFiles/Achievements/Ach2.png")
+            elif i + 1 == 3:
+                achievement_3.image = pygame.image.load("data/PngFiles/Achievements/Ach3.png")
+            elif i + 1 == 4:
+                achievement_4.image = pygame.image.load("data/PngFiles/Achievements/Ach4.png")
+            elif i + 1 == 5:
+                achievement_5.image = pygame.image.load("data/PngFiles/Achievements/Ach5.png")
+            elif i + 1 == 6:
+                achievement_6.image = pygame.image.load("data/PngFiles/Achievements/Ach6.png")
+        else:
+            if i + 1 == 1:
+                achievement_1.image = pygame.image.load("data/PngFiles/Achievements/Ach1BW.png")
+            elif i + 1 == 2:
+                achievement_2.image = pygame.image.load("data/PngFiles/Achievements/Ach2BW.png")
+            elif i + 1 == 3:
+                achievement_3.image = pygame.image.load("data/PngFiles/Achievements/Ach3BW.png")
+            elif i + 1 == 4:
+                achievement_4.image = pygame.image.load("data/PngFiles/Achievements/Ach4BW.png")
+            elif i + 1 == 5:
+                achievement_5.image = pygame.image.load("data/PngFiles/Achievements/Ach5BW.png")
+            elif i + 1 == 6:
+                achievement_6.image = pygame.image.load("data/PngFiles/Achievements/Ach6BW.png")
+
+
+#
+def reset_achievements_flags():
+    global no_death_flag, no_damage_flag
+    with open("data/TxtFiles/AchievementsFlags.txt", "w", encoding="utf8") as file:
+        file.write(f"NoDamage-0\nNoDeath-0")
+    no_damage_flag = "0"
+    no_death_flag = "0"
+
+
 # Инициализация pygame.mixer и pygame
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
