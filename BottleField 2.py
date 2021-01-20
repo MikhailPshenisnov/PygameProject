@@ -672,6 +672,32 @@ valera_drink_m = pygame.image.load("data/PngFiles/Valeras/ValeraDrinkM.png")
 valera_idle = pygame.image.load("data/PngFiles/Valeras/ValeraIdle.png")
 valera = UniversalSprite(valera_group, valera_idle, 575, 365)
 
+# Звуки
+move_conveyor_sound = pygame.mixer.Sound("data/Sounds/ConveyorSound.wav")
+move_conveyor_sound.set_volume(0.5)
+drink_bottle_sound = pygame.mixer.Sound("data/Sounds/DrinkSound.wav")
+drink_bottle_sound.set_volume(0.5)
+utilize_bottle_sound = pygame.mixer.Sound("data/Sounds/UtilizeBottleSound.wav")
+utilize_bottle_sound.set_volume(0.5)
+damage_sound = pygame.mixer.Sound("data/Sounds/DamageSound.wav")
+damage_sound.set_volume(0.5)
+pop_sound = pygame.mixer.Sound("data/Sounds/PopSound.wav")
+pop_sound.set_volume(0.1)
+move_sound = pygame.mixer.Sound("data/Sounds/MoveSound.wav")
+move_sound.set_volume(0.1)
+buy_v_sound = pygame.mixer.Sound("data/Sounds/BuyVSound.wav")
+buy_v_sound.set_volume(0.5)
+win_sound = pygame.mixer.Sound("data/Sounds/WinSound.wav")
+win_sound.set_volume(0.5)
+
+# Музыка
+pygame.mixer.music.set_volume(0.1)
+menu_music_name = "data/Sounds/MenuMusic.mp3"
+first_level_music_name = "data/Sounds/CPU_Talk.mp3"
+second_level_music_name = "data/Sounds/Rain.mp3"
+final_music_name = "data/Sounds/Digestive_biscuit.mp3"
+pygame.mixer.music.load(menu_music_name)
+
 # Игра
 running = True
 while running:
