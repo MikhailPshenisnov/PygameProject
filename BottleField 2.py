@@ -45,8 +45,8 @@ class NoBottle(Bottle):
                          "data/PngFiles/Bottles/Bottle55.png")
 
 
-# Родительский класс для всех кнопок (возможно будет переписан и для некоторых спрайтов)
-class UniversalButton(pygame.sprite.Sprite):
+# Родительский класс для всех кнопок и прочих спрайтов
+class UniversalSprite(pygame.sprite.Sprite):
     def __init__(self, group, image, x, y):
         super().__init__(group)
         self.image = image
@@ -55,56 +55,76 @@ class UniversalButton(pygame.sprite.Sprite):
         self.rect.y = y
 
 
-# Кнопка "Начать игру" / "Продолжить" (запускает 1 уровень если нет сохраненного прогресса,
-# запускает уровень (этап уровня) на котором игрок остановился если есть сохраненный прогресс,
-# открывает окно выбора уровня если игра была пройдена)
-class PlayButton(UniversalButton):
+# Кнопка "Начать игру" / "Продолжить" (при нажатии запускает 1 уровень если нет сохраненного прогресса,
+# запускает уровень (НЕ этап), на котором игрок остановился, если есть сохраненный прогресс)
+class PlayButton(UniversalSprite):
     def __init__(self, group, image, x, y):
         super().__init__(group, image, x, y)
 
     def update(self, *args):
-        global first_level_text_flag, start_window_flag, game_progress
+        global first_level_text_flag, start_window_flag, game_progress, second_level_text_flag, \
+            pop_sound, first_level_music_name, second_level_music_name
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos) and start_window_flag:
             if args[0].button == 1:
+                pop_sound.play()
                 if game_progress == 0:
+                    pygame.mixer.music.load(first_level_music_name)
+                    pygame.mixer.music.play(-1, 0.0, 1500)
                     start_window_flag = False
                     first_level_text_flag = True
                 elif game_progress == 1:
-                    pass
-                elif game_progress == 2:
-                    pass
-                print("PlayBtn")
+                    pygame.mixer.music.load(second_level_music_name)
+                    pygame.mixer.music.play(-1, 0.0, 1500)
+                    start_window_flag = False
+                    second_level_text_flag = True
 
 
-# Кнопка "Инфо" (запускает окно с общей информацией об игре)
-class InfoButton(UniversalButton):
+# Кнопка "Инфо" (при нажатии запускает окно с общей информацией об игре)
+class InfoButton(UniversalSprite):
     def __init__(self, group, image, x, y):
         super().__init__(group, image, x, y)
 
     def update(self, *args):
-        global info_window_flag, start_window_flag
+        global info_window_flag, start_window_flag, pop_sound
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos) and start_window_flag:
             if args[0].button == 1:
+                pop_sound.play()
                 start_window_flag = False
                 info_window_flag = True
-                print("InfoBtn")
 
 
-# Кнопка "Достижения" (запускает окно с достижениями)
-class AchievementsButton(UniversalButton):
+# Кнопка "Достижения" (при нажатии запускает окно с достижениями)
+class AchievementsButton(UniversalSprite):
     def __init__(self, group, image, x, y):
         super().__init__(group, image, x, y)
 
     def update(self, *args):
-        global achievements_window_flag, start_window_flag
+        global achievements_window_flag, start_window_flag, pop_sound
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos) and start_window_flag:
             if args[0].button == 1:
+                pop_sound.play()
                 start_window_flag = False
                 achievements_window_flag = True
-                print("AchievementsBtn")
+
+
+# Кнопка "Сбросить прогресс" (при нажатии сбраывает сохранение, но не достижения)
+class ResetProgressButton(UniversalSprite):
+    def __init__(self, group, image, x, y):
+        super().__init__(group, image, x, y)
+
+    def update(self, *args):
+        global start_window_flag, game_progress, pop_sound
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos) and start_window_flag:
+            if args[0].button == 1:
+                pop_sound.play()
+                game_progress = 0
+                reset_achievements_flags()
+                with open("data/TxtFiles/GameProgress.txt", "w", encoding="utf8") as file:
+                    file.write("0")
 
 
 # Функция для отрисовывания многострочного текста
