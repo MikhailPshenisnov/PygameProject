@@ -165,6 +165,24 @@ second_level_flag = False
 final_window_flag = False
 credits_window_flag = False
 
+# Прогресс прохождения игры
+with open("data/TxtFiles/GameProgress.txt", "r", encoding="utf8") as file:
+    game_progress = int(file.read().split("\n")[0])
+
+# Здоровье для 1 уровня
+HP = 3
+
+# Список бутылок
+bottles_list = [NoBottle(), NoBottle(), NoBottle()]
+
+# Событие для движения конвейера и счетчик для него
+CONVEYORTIMER = pygame.USEREVENT + 1
+pygame.time.set_timer(CONVEYORTIMER, 200)
+first_level_seconds = 0
+
+# Счетик бутылок для 1 уровня
+bottles_counter = 0
+
 # Кнопки стартового экрана
 start_window_buttons = pygame.sprite.Group()
 PlayButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn/PlayBtn.png"), 590, 400)
@@ -174,8 +192,6 @@ AchievementsButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn
 # Шрифты
 title_font = pygame.font.Font("data/Fonts/19363.ttf", 30)
 text_font = pygame.font.Font("data/Fonts/19363.ttf", 20)
-
-game_progress = 0
 
 # Игра
 running = True
