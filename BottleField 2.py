@@ -192,6 +192,8 @@ AchievementsButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn
 # Шрифты
 title_font = pygame.font.Font("data/Fonts/19363.ttf", 30)
 text_font = pygame.font.Font("data/Fonts/19363.ttf", 20)
+very_big_font = pygame.font.Font("data/Fonts/19363.ttf", 120)
+small_font = pygame.font.Font("data/Fonts/19363.ttf", 16)
 
 # Игра
 running = True
