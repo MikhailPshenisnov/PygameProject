@@ -1,0 +1,2 @@
+NoDamage-0
+NoDeath-0
