@@ -970,3 +970,24 @@ while running:
         screen.blit(final_window_bg, (0, 0))
         draw_text(final_window_text, screen, title_font, text_font, 35, 550, 50, 250, 150, 400, 600)
         pygame.display.flip()
+
+    # Титры
+    while credits_window_flag:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                credits_window_flag = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    pop_sound.play()
+                    credits_y = 720
+                    pygame.mixer.music.set_volume(0.1)
+                    pygame.mixer.music.load(menu_music_name)
+                    pygame.mixer.music.play(-1, 0.0, 1500)
+                    start_window_flag = True
+                    credits_window_flag = False
+        screen.fill(pygame.color.Color("black"))
+        draw_text(credits_text, screen, title_font, text_font, 35, 0, 0, 250, credits_y, 0, 0)
+        credits_y -= 1
+        clock.tick(credits_FPS)
+        pygame.display.flip()
