@@ -281,6 +281,165 @@ def draw_text(full_text, screen_name, font1, font2, indent, title_x, title_y,
     screen_name.blit(next_string1, (exit_message_x, exit_message_y))
 
 
+# Возвращает случайно выбранный класс бутылки
+def generate_bottle():
+    # Некоторые бутылки встречаются 2 раза, таким образом их вероятность повышается
+    new_bottle = choice([EthanolBottle(), EthanolBottle(),
+                         VBottle(), VBottle(),
+                         SolventBottle(), SolventBottle(),
+                         MedicineBottle()])
+    return new_bottle
+
+
+# Сдвигает конвейер на одну ячейку вправо, изменяет HP и
+# счетчик бутылок до победы в соответствии с правилами
+def move_conveyor():
+    global bottles_list, bottle_1, bottle_2, bottle_3, valera, valera_idle, \
+        HP, first_level_seconds, bottles_counter, no_damage_flag, move_conveyor_sound, \
+        damage_sound
+    move_conveyor_sound.play()
+    bottles_list = [generate_bottle(), bottles_list[0], bottles_list[1]]
+    bottle_1.image = pygame.image.load(bottles_list[0].icon_path)
+    bottle_2.image = pygame.image.load(bottles_list[1].icon_path)
+    bottle_3.image = pygame.image.load(bottles_list[2].half_icon_path)
+    valera.image = valera_idle
+    old_hp = HP
+    if bottles_list[2].text:
+        if bottles_list[2].text == "V":
+            damage_sound.play()
+            HP -= 1
+            bottles_counter -= 1
+        elif bottles_list[2].text == "E":
+            bottles_counter += 1
+        elif bottles_list[2].text == "S":
+            damage_sound.play()
+            HP -= 1
+            bottles_counter -= 1
+        elif bottles_list[2].text == "M":
+            damage_sound.play()
+            HP -= 1
+            bottles_counter -= 1
+    new_hp = HP
+    if new_hp < old_hp:
+        no_damage_flag = "1"
+        update_achievements_flags()
+    check_hp()
+    first_level_seconds = 0
+
+
+# Убирает бутылку из 2 слота, меняет изображение Валеры в соответствии с бутылкой,
+# изменяет HP и счетчик бутылок в соответствии с правилами
+def drink_bottle():
+    global bottles_list, HP, valera, valera_drink_v, valera_drink_e, \
+        valera_drink_m, valera_drink_s, bottle_2, bottles_counter, no_damage_flag, \
+        drink_bottle_sound, damage_sound
+    old_hp = HP
+    if bottles_list[1].text:
+        drink_bottle_sound.play()
+        if bottles_list[1].text == "V":
+            valera.image = valera_drink_v
+            bottles_counter += 1
+        elif bottles_list[1].text == "E":
+            damage_sound.play()
+            HP -= 1
+            bottles_counter -= 1
+            valera.image = valera_drink_e
+        elif bottles_list[1].text == "S":
+            damage_sound.play()
+            HP -= 1
+            bottles_counter -= 1
+            valera.image = valera_drink_s
+        elif bottles_list[1].text == "M":
+            HP += 1
+            bottles_counter += 1
+            valera.image = valera_drink_m
+    new_hp = HP
+    if new_hp < old_hp:
+        no_damage_flag = "1"
+        update_achievements_flags()
+    bottles_list[1] = NoBottle()
+    bottle_2.image = pygame.image.load(bottles_list[1].icon_path)
+    check_hp()
+
+
+# Убирает бутылку из 2 слота, изменяет HP и счетчик бутылок в соответствии с правилами
+def utilize_bottle():
+    global bottles_list, HP, bottle_2, bottles_counter, no_damage_flag, \
+        utilize_bottle_sound, damage_sound
+    old_hp = HP
+    if bottles_list[1].text:
+        utilize_bottle_sound.play()
+        if bottles_list[1].text == "V":
+            damage_sound.play()
+            HP -= 1
+            bottles_counter -= 1
+        elif bottles_list[1].text == "E":
+            damage_sound.play()
+            HP -= 1
+            bottles_counter -= 1
+        elif bottles_list[1].text == "S":
+            bottles_counter += 1
+        elif bottles_list[1].text == "M":
+            bottles_counter += 1
+    new_hp = HP
+    if new_hp < old_hp:
+        no_damage_flag = "1"
+        update_achievements_flags()
+    bottles_list[1] = NoBottle()
+    bottle_2.image = pygame.image.load(bottles_list[1].icon_path)
+    check_hp()
+
+
+# Обнуляет некоторые параметры и перезапускает первый уровень
+def restart_first_level():
+    global HP, bottles_list, bottles_counter, first_level_seconds, \
+        bottle_1, bottle_2, bottle_3, valera, valera_idle
+    HP = 3
+    bottles_list = [NoBottle(), NoBottle(), NoBottle()]
+    bottle_1.image = pygame.image.load(bottles_list[0].icon_path)
+    bottle_2.image = pygame.image.load(bottles_list[1].icon_path)
+    bottle_3.image = pygame.image.load(bottles_list[2].half_icon_path)
+    valera.image = valera_idle
+    bottles_counter = 0
+    first_level_seconds = 0
+
+
+# Проверяет HP и отрисовывает их в соответствии с количеством HP, при 0 HP завершает первый уровень
+def check_hp():
+    global HP, hit_point_1, hit_point_2, hit_point_3, game_over_window_flag, first_level_flag, \
+        no_death_flag, empty_hp_image, hp_image
+    if HP > 3:
+        HP = 3
+    elif HP <= 0:
+        hit_point_1.image = empty_hp_image
+        hit_point_2.image = empty_hp_image
+        hit_point_3.image = empty_hp_image
+        give_achievement(6)
+        no_death_flag = "1"
+        update_achievements_flags()
+        game_over_window_flag = True
+        first_level_flag = False
+    elif HP == 3:
+        hit_point_1.image = hp_image
+        hit_point_2.image = hp_image
+        hit_point_3.image = hp_image
+    elif HP == 2:
+        hit_point_1.image = hp_image
+        hit_point_2.image = hp_image
+        hit_point_3.image = empty_hp_image
+    elif HP == 1:
+        hit_point_1.image = hp_image
+        hit_point_2.image = empty_hp_image
+        hit_point_3.image = empty_hp_image
+
+
+# Проверяет не ушел ли счетчик бутылок ниже 0
+def check_bottles_counter():
+    global bottles_counter
+    if bottles_counter < 0:
+        bottles_counter = 0
+
+
 # Инициализация pygame.mixer и pygame
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
