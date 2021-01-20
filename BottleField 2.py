@@ -860,6 +860,22 @@ while running:
             first_level_flag = False
         pygame.display.flip()
 
+    # Окно Game Over
+    while game_over_window_flag:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                game_over_window_flag = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    pop_sound.play()
+                    restart_first_level()
+                    first_level_flag = True
+                    game_over_window_flag = False
+        screen.blit(game_over_window_bg, (0, 0))
+        draw_text(game_over_text, screen, very_big_font, text_font, 150, 300, 100, 0, 600, 310, 600)
+        pygame.display.flip()
+
     # Обучение для второго уровня
     while second_level_text_flag:
         for event in pygame.event.get():
