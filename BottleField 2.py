@@ -698,6 +698,32 @@ second_level_music_name = "data/Sounds/Rain.mp3"
 final_music_name = "data/Sounds/Digestive_biscuit.mp3"
 pygame.mixer.music.load(menu_music_name)
 
+# Группы спрайтов для 2 уровня
+tiles_group = pygame.sprite.Group()
+player_group = pygame.sprite.Group()
+larek_group = pygame.sprite.Group()
+walls_group = pygame.sprite.Group()
+
+# Изображения для 2 уровня
+tile_images = {"=": pygame.image.load("data/PngFiles/SecondLevel/RoadLR.png"),
+               "+": pygame.image.load("data/PngFiles/SecondLevel/RoadTBLR.png"),
+               "|": pygame.image.load("data/PngFiles/SecondLevel/RoadTB.png"),
+               "L": pygame.image.load("data/PngFiles/SecondLevel/RoadTR.png"),
+               "J": pygame.image.load("data/PngFiles/SecondLevel/RoadLT.png"),
+               "/": pygame.image.load("data/PngFiles/SecondLevel/RoadRB.png"),
+               "7": pygame.image.load("data/PngFiles/SecondLevel/RoadBL.png"),
+               "D": pygame.image.load("data/PngFiles/SecondLevel/HouseD.png"),
+               "U": pygame.image.load("data/PngFiles/SecondLevel/HouseT.png"),
+               "I": pygame.image.load("data/PngFiles/SecondLevel/HouseL.png"),
+               "R": pygame.image.load("data/PngFiles/SecondLevel/HouseR.png"),
+               "F": pygame.image.load("data/PngFiles/SecondLevel/LarekKalitka.png"),
+               "Z": pygame.image.load("data/PngFiles/SecondLevel/RoadRBL.png"),
+               "X": pygame.image.load("data/PngFiles/SecondLevel/RoadTRB.png"),
+               "C": pygame.image.load("data/PngFiles/SecondLevel/RoadLTR.png"),
+               "V": pygame.image.load("data/PngFiles/SecondLevel/RoadBLT.png")}
+player_image = pygame.image.load("data/PngFiles/Valeras/ValeraHead.png")
+step = tile_width = tile_height = 70
+
 # Игра
 running = True
 while running:
