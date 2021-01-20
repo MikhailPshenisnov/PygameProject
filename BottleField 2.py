@@ -961,4 +961,12 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
                 final_window_flag = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    pop_sound.play()
+                    pygame.mixer.music.set_volume(0.5)
+                    credits_window_flag = True
+                    final_window_flag = False
+        screen.blit(final_window_bg, (0, 0))
+        draw_text(final_window_text, screen, title_font, text_font, 35, 550, 50, 250, 150, 400, 600)
         pygame.display.flip()
