@@ -663,6 +663,15 @@ hit_point_1 = UniversalSprite(hit_points, hp_image, 1195, 100)
 hit_point_2 = UniversalSprite(hit_points, hp_image, 1195, 160)
 hit_point_3 = UniversalSprite(hit_points, hp_image, 1195, 220)
 
+# Валера для 1 уровня
+valera_group = pygame.sprite.Group()
+valera_drink_v = pygame.image.load("data/PngFiles/Valeras/ValeraDrinkV.png")
+valera_drink_e = pygame.image.load("data/PngFiles/Valeras/ValeraDrinkE.png")
+valera_drink_s = pygame.image.load("data/PngFiles/Valeras/ValeraDrinkS.png")
+valera_drink_m = pygame.image.load("data/PngFiles/Valeras/ValeraDrinkM.png")
+valera_idle = pygame.image.load("data/PngFiles/Valeras/ValeraIdle.png")
+valera = UniversalSprite(valera_group, valera_idle, 575, 365)
+
 # Игра
 running = True
 while running:
