@@ -595,6 +595,7 @@ start_window_buttons = pygame.sprite.Group()
 PlayButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn/PlayBtn.png"), 590, 400)
 InfoButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn/InfoBtn.png"), 700, 400)
 AchievementsButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn/AchBtn.png"), 480, 400)
+ResetProgressButton(start_window_buttons, pygame.image.load("data/PngFiles/BigBtn/ResetProgressBtn.png"), 1072, 680)
 
 # Шрифты
 title_font = pygame.font.Font("data/Fonts/19363.ttf", 30)
