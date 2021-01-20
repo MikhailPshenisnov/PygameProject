@@ -1,2 +1,2 @@
-NoDamage-1
-NoDeath-1
+NoDamage-0
+NoDeath-0

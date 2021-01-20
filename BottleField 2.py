@@ -898,6 +898,61 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
                 second_level_flag = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pop_sound.play()
+                    pygame.mixer.music.load(menu_music_name)
+                    pygame.mixer.music.play(-1, 0.0, 1500)
+                    start_window_flag = True
+                    second_level_flag = False
+                if event.key == pygame.K_a:
+                    player.displacement('left')
+                elif event.key == pygame.K_d:
+                    player.displacement('right')
+                elif event.key == pygame.K_w:
+                    player.displacement('up')
+                elif event.key == pygame.K_s:
+                    player.displacement('down')
+        screen.blit(second_level_bg, (0, 0))
+        draw_text(["Управление:", "", "Для предвижения используйте WASD", ""],
+                  screen, title_font, text_font, 35, 20, 300, 20, 350, 0, 0)
+        draw_text(["Цель:", "", "Добраться до дома или ларька за данное", "кол-во движений", ""],
+                  screen, title_font, text_font, 35, 20, 400, 20, 450, 0, 0)
+        draw_text(["", "", f"Ходов осталось: {steps_counter}", ""],
+                  screen, title_font, text_font, 35, 0, 0, 150, 600, 0, 0)
+        pygame.draw.rect(screen, pygame.color.Color("gray"), (570, 10, 700, 700), 5)
+        tiles_group.draw(screen)
+        player_group.draw(screen)
+        if pygame.sprite.spritecollideany(player, larek_group):
+            if level_part_num == 3:
+                win_sound.play()
+                game_progress = 0
+                with open("data/TxtFiles/GameProgress.txt", "w", encoding="utf8") as file:
+                    file.write("0")
+                pygame.mixer.music.load(final_music_name)
+                pygame.mixer.music.play(-1, 1.0, 1500)
+                give_achievement(1)
+                give_achievement(5)
+                if no_death_flag == "0":
+                    give_achievement(2)
+                if no_damage_flag == "0":
+                    give_achievement(3)
+                reset_achievements_flags()
+                final_window_flag = True
+                second_level_flag = False
+                break
+            else:
+                buy_v_sound.play()
+                level_part_num += 1
+                restart_second_level(level_part_num)
+        if steps_counter <= 0:
+            give_achievement(6)
+            damage_sound.play()
+            no_damage_flag = "1"
+            no_death_flag = "1"
+            update_achievements_flags()
+            restart_second_level(level_part_num)
+        pygame.display.flip()
 
     # Концовка
     while final_window_flag:
