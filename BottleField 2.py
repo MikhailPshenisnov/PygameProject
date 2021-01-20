@@ -132,6 +132,8 @@ def draw_text(full_text, screen_name, font1, font2, indent, title_x, title_y,
     screen_name.blit(next_string1, (exit_message_x, exit_message_y))
 
 
+# Инициализация pygame.mixer и pygame
+pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
 
 # Создание окна
@@ -140,27 +142,28 @@ pygame.display.set_icon(pygame.image.load("data/PngFiles/Other/Small_Icon.png"))
 pygame.display.set_caption("BottleField 2")
 screen = pygame.display.set_mode(size)
 
+# Задние фоны
+start_window_bg = pygame.image.load("data/PngFiles/Windows/StartWindow.png")
+info_window_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
+achievements_window_bg = pygame.image.load("data/PngFiles/Windows/AchievementsWindow.png")
+first_level_text_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
+first_level_bg = pygame.image.load("data/PngFiles/Windows/FirstLevel.png")
+game_over_window_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
+second_level_text_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
+second_level_bg = pygame.image.load("data/PngFiles/Windows/SecondLevel.png")
+final_window_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
+
 # Флаги окон
 start_window_flag = True
 info_window_flag = False
 achievements_window_flag = False
 first_level_text_flag = False
 first_level_flag = False
+game_over_window_flag = False
 second_level_text_flag = False
-second_level_1_flag = False
-second_level_2_flag = False
-second_level_3_flag = False
+second_level_flag = False
 final_window_flag = False
-
-# Задние фоны окон
-start_window_bg = pygame.image.load("data/PngFiles/Windows/StartWindow.png")
-info_window_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
-achievements_window_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
-first_level_text_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
-first_level_bg = pygame.image.load("data/PngFiles/Windows/MainWindow.png")
-second_level_text_bg = pygame.image.load("data/PngFiles/Windows/UniversalWindow.png")
-# Второй уровень должен генерироваться сам
-final_window_bg = None
+credits_window_flag = False
 
 # Кнопки стартового экрана
 start_window_buttons = pygame.sprite.Group()
