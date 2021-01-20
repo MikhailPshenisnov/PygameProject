@@ -800,12 +800,12 @@ while running:
                 first_level_text_flag = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    pop_sound.play()
                     first_level_flag = True
-                    first_level_text_flag = False
-                elif event.key == pygame.K_ESCAPE:
-                    start_window_flag = True
+                    restart_first_level()
                     first_level_text_flag = False
         screen.blit(first_level_text_bg, (0, 0))
+        draw_text(first_level_text, screen, title_font, text_font, 35, 460, 15, 250, 120, 400, 625)
         pygame.display.flip()
 
     # Первый уровень
@@ -816,15 +816,48 @@ while running:
                 first_level_flag = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    pop_sound.play()
+                    pygame.mixer.music.load(menu_music_name)
+                    pygame.mixer.music.play(-1, 0.0, 1500)
                     start_window_flag = True
                     first_level_flag = False
-
-            # Временный выход с первого уровня
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
-                first_level_flag = False
-                start_window_flag = True
-
+            if event.type == CONVEYORTIMER:
+                first_level_seconds += 200
+            first_level_buttons.update(event)
         screen.blit(first_level_bg, (0, 0))
+        check_bottles_counter()
+        draw_text(["", "", f"Бутылок: {bottles_counter} / 100", ""], screen,
+                  title_font, text_font, 35, 0, 0, 1070, 30, 0, 0)
+        first_level_buttons.draw(screen)
+        hit_points.draw(screen)
+        valera_group.draw(screen)
+        bottles.draw(screen)
+        check_hp()
+        if bottles_counter <= 10:
+            if first_level_seconds == 1600:
+                move_conveyor()
+        elif 10 < bottles_counter <= 25:
+            if first_level_seconds == 1400:
+                move_conveyor()
+        elif 25 < bottles_counter <= 50:
+            if first_level_seconds == 1200:
+                move_conveyor()
+        elif 50 < bottles_counter <= 90:
+            if first_level_seconds == 1000:
+                move_conveyor()
+        elif 90 < bottles_counter <= 100:
+            if first_level_seconds == 800:
+                move_conveyor()
+        if bottles_counter >= 100:
+            win_sound.play()
+            give_achievement(4)
+            pygame.mixer.music.load(second_level_music_name)
+            pygame.mixer.music.play(-1, 0.0, 1500)
+            game_progress = 1
+            with open("data/TxtFiles/GameProgress.txt", "w", encoding="utf8") as file:
+                file.write("1")
+            second_level_text_flag = True
+            first_level_flag = False
         pygame.display.flip()
 
     # Обучение для второго уровня
