@@ -127,6 +127,55 @@ class ResetProgressButton(UniversalSprite):
                     file.write("0")
 
 
+# Кнопка "Утилизировать" (при нажатии вызывает функцию utilize_bottle())
+class UtilizeButton(UniversalSprite):
+    def __init__(self, group, image, x, y):
+        super().__init__(group, image, x, y)
+
+    def update(self, *args):
+        global first_level_flag
+        if args and first_level_flag:
+            if args[0].type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(args[0].pos):
+                if args[0].button == 1:
+                    utilize_bottle()
+            if args[0].type == pygame.KEYDOWN:
+                if args[0].key == pygame.K_z:
+                    utilize_bottle()
+
+
+# Кнопка "Выпить" (при нажатии вызывает функцию drink_bottle())
+class DrinkButton(UniversalSprite):
+    def __init__(self, group, image, x, y):
+        super().__init__(group, image, x, y)
+
+    def update(self, *args):
+        global first_level_flag
+        if args and first_level_flag:
+            if args[0].type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(args[0].pos):
+                if args[0].button == 1:
+                    drink_bottle()
+            if args[0].type == pygame.KEYDOWN:
+                if args[0].key == pygame.K_x:
+                    drink_bottle()
+
+
+# Кнопка "Следующий" (при нажатии досрочно сдвигает конвейер, и
+# отсчет события сдвигания конвейера начинает отсчитываться от нового момента времени)
+class NextButton(UniversalSprite):
+    def __init__(self, group, image, x, y):
+        super().__init__(group, image, x, y)
+
+    def update(self, *args):
+        global first_level_flag
+        if args and first_level_flag:
+            if args[0].type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(args[0].pos):
+                if args[0].button == 1:
+                    move_conveyor()
+            if args[0].type == pygame.KEYDOWN:
+                if args[0].key == pygame.K_c:
+                    move_conveyor()
+
+
 # Функция для отрисовывания многострочного текста
 def draw_text(full_text, screen_name, font1, font2, indent, title_x, title_y,
               text_x, text_y, exit_message_x, exit_message_y):
