@@ -733,6 +733,13 @@ player = None
 # Счетчик для этапов 2 уровня
 level_part_num = 1
 
+# Позиция титров по y
+credits_y = 720
+
+# ФПС для титров
+clock = pygame.time.Clock()
+credits_FPS = 60
+
 # Игра
 running = True
 while running:
