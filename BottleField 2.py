@@ -724,6 +724,15 @@ tile_images = {"=": pygame.image.load("data/PngFiles/SecondLevel/RoadLR.png"),
 player_image = pygame.image.load("data/PngFiles/Valeras/ValeraHead.png")
 step = tile_width = tile_height = 70
 
+# Счетчик шагов для 2 уровня
+steps_counter = 0
+
+# Персонаж для 2 уровня
+player = None
+
+# Счетчик для этапов 2 уровня
+level_part_num = 1
+
 # Игра
 running = True
 while running:
