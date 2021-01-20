@@ -625,6 +625,44 @@ with open("data/TxtFiles/FinalText.txt", "r", encoding="utf8") as text:
 with open("data/TxtFiles/CreditsText.txt", "r", encoding="utf8") as text:
     credits_text = text.read().split("\n")
 
+# Достижения
+achievements_group = pygame.sprite.Group()
+ResetAchievementsButton(achievements_group, pygame.image.load("data/PngFiles/BigBtn/ResetProgressBtn.png"), 540, 590)
+achievement_1 = UniversalSprite(achievements_group,
+                                pygame.image.load("data/PngFiles/Achievements/Ach1BW.png"), 100, 50)
+achievement_2 = UniversalSprite(achievements_group,
+                                pygame.image.load("data/PngFiles/Achievements/Ach2BW.png"), 380, 230)
+achievement_3 = UniversalSprite(achievements_group,
+                                pygame.image.load("data/PngFiles/Achievements/Ach3BW.png"), 930, 50)
+achievement_4 = UniversalSprite(achievements_group,
+                                pygame.image.load("data/PngFiles/Achievements/Ach4BW.png"), 100, 375)
+achievement_5 = UniversalSprite(achievements_group,
+                                pygame.image.load("data/PngFiles/Achievements/Ach5BW.png"), 650, 230)
+achievement_6 = UniversalSprite(achievements_group,
+                                pygame.image.load("data/PngFiles/Achievements/Ach6BW.png"), 930, 375)
+with open("data/TxtFiles/AchievementsFlags.txt", "r", encoding="utf8") as file:
+    no_damage_flag, no_death_flag = [x.split("-")[1] for x in file.read().split("\n")]
+
+# Кнопки 1 уровня
+first_level_buttons = pygame.sprite.Group()
+UtilizeButton(first_level_buttons, pygame.image.load("data/PngFiles/SmallBtn/XBtn.png"), 550, 280)
+DrinkButton(first_level_buttons, pygame.image.load("data/PngFiles/SmallBtn/DrBtn.png"), 650, 280)
+NextButton(first_level_buttons, pygame.image.load("data/PngFiles/SmallBtn/NextBtn.png"), 750, 280)
+
+# Бутылки для 1 уровня
+bottles = pygame.sprite.Group()
+bottle_1 = UniversalSprite(bottles, pygame.image.load(bottles_list[0].icon_path), 220, 480)
+bottle_2 = UniversalSprite(bottles, pygame.image.load(bottles_list[1].icon_path), 590, 480)
+bottle_3 = UniversalSprite(bottles, pygame.image.load(bottles_list[1].half_icon_path), 1125, 480)
+
+# Жизни для 1 уровня
+hit_points = pygame.sprite.Group()
+hp_image = pygame.image.load("data/PngFiles/Other/HP.png")
+empty_hp_image = pygame.image.load("data/PngFiles/Other/EmptyHP.png")
+hit_point_1 = UniversalSprite(hit_points, hp_image, 1195, 100)
+hit_point_2 = UniversalSprite(hit_points, hp_image, 1195, 160)
+hit_point_3 = UniversalSprite(hit_points, hp_image, 1195, 220)
+
 # Игра
 running = True
 while running:
