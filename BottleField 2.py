@@ -440,6 +440,46 @@ def check_bottles_counter():
         bottles_counter = 0
 
 
+# Считывает карту уровня с файла
+def load_level(filename):
+    with open(filename, "r", encoding="utf8") as mapFile:
+        level_map = [line.strip() for line in mapFile]
+    return level_map
+
+
+# Отрисовывает уровень по карте уровня
+def generate_level(level):
+    new_player, x, y = None, None, None
+    for y in range(len(level)):
+        for x in range(len(level[y])):
+            if level[y][x] == "S":
+                Tile("=", x, y)
+                new_player = Player(x, y)
+
+            else:
+                Tile(level[y][x], x, y)
+    return new_player
+
+
+# Обнуляет некоторые параметры и перезапускает второй уровень
+def restart_second_level(part_num):
+    global player, tiles_group, player_group, larek_group, walls_group, steps_counter, level_part_num
+    tiles_group = pygame.sprite.Group()
+    player_group = pygame.sprite.Group()
+    larek_group = pygame.sprite.Group()
+    walls_group = pygame.sprite.Group()
+    if part_num == 1:
+        level_part_num = 1
+        steps_counter = 9
+        player = generate_level(load_level("data/TxtFiles/Second_Level_1.txt"))
+    elif part_num == 2:
+        steps_counter = 9
+        player = generate_level(load_level("data/TxtFiles/Second_Level_2.txt"))
+    elif part_num == 3:
+        steps_counter = 22
+        player = generate_level(load_level("data/TxtFiles/Second_Level_3.txt"))
+
+
 # Инициализация pygame.mixer и pygame
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
