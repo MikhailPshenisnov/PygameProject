@@ -1,40 +1,48 @@
 import pygame
+from random import choice
 
 
+# Универсальный класс бутылки (несет лишь информацию об названии и пути до изображения бутылки)
 class Bottle:
-    def __init__(self, text, icon_path, half_icon_path):
-        self.text = text
+    def __init__(self, bottle_type, icon_path, half_icon_path):
+        self.text = bottle_type
         self.icon_path = icon_path
         self.half_icon_path = half_icon_path
 
 
+# Класс бутылки V
 class VBottle(Bottle):
     def __init__(self):
         super().__init__("V", "data/PngFiles/Bottles/Bottle1.png",
                          "data/PngFiles/Bottles/Bottle11.png")
 
 
+# Класс бутылки E
 class EthanolBottle(Bottle):
     def __init__(self):
         super().__init__("E", "data/PngFiles/Bottles/Bottle2.png",
                          "data/PngFiles/Bottles/Bottle22.png")
 
 
+# Класс бутылки S
 class SolventBottle(Bottle):
     def __init__(self):
         super().__init__("S", "data/PngFiles/Bottles/Bottle3.png",
                          "data/PngFiles/Bottles/Bottle33.png")
 
 
+# Класс бутылки M
 class MedicineBottle(Bottle):
     def __init__(self):
         super().__init__("M", "data/PngFiles/Bottles/Bottle4.png",
                          "data/PngFiles/Bottles/Bottle44.png")
 
 
+# Класс бутылки, который используется при отсутствии бутылки
 class NoBottle(Bottle):
     def __init__(self):
-        super().__init__("", "", "")
+        super().__init__("", "data/PngFiles/Bottles/Bottle5.png",
+                         "data/PngFiles/Bottles/Bottle55.png")
 
 
 # Родительский класс для всех кнопок (возможно будет переписан и для некоторых спрайтов)
@@ -97,6 +105,31 @@ class AchievementsButton(UniversalButton):
                 start_window_flag = False
                 achievements_window_flag = True
                 print("AchievementsBtn")
+
+
+# Функция для отрисовывания многострочного текста
+def draw_text(full_text, screen_name, font1, font2, indent, title_x, title_y,
+              text_x, text_y, exit_message_x, exit_message_y):
+    text_title = full_text[:2]
+    text_text = full_text[2:-1]
+    exit_message = full_text[-1:][0]
+    # Отрисовывает заголовок текста (первые 2 строчки)
+    for string in range(len(text_title)):
+        next_string1 = font1.render(text_title[string], True, (255, 255, 255))
+        next_string2 = font1.render(text_title[string], True, (0, 0, 0))
+        screen_name.blit(next_string2, ((title_x + 2), (title_y + 2) + (indent + 2) * string))
+        screen_name.blit(next_string1, (title_x, title_y + (indent + 2) * string))
+    # Отрисовывает основной текст
+    for string in range(len(text_text)):
+        next_string1 = font2.render(text_text[string], True, (255, 255, 255))
+        next_string2 = font2.render(text_text[string], True, (0, 0, 0))
+        screen_name.blit(next_string2, ((text_x + 2), (text_y + 2) + indent * string))
+        screen_name.blit(next_string1, (text_x, text_y + indent * string))
+    # Сообщение для выхода с экрана
+    next_string1 = font2.render(exit_message, True, (255, 207, 72))
+    next_string2 = font2.render(exit_message, True, (0, 0, 0))
+    screen_name.blit(next_string2, ((exit_message_x + 2), (exit_message_y + 2)))
+    screen_name.blit(next_string1, (exit_message_x, exit_message_y))
 
 
 pygame.init()
