@@ -882,31 +882,13 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
                 second_level_text_flag = False
-        pygame.display.flip()
 
-    # Первый этап второго уровня
-    while second_level_1_flag:
+    # Второй уровень
+    while second_level_flag:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                second_level_1_flag = False
-        pygame.display.flip()
-
-    # Второй этап второго уровня
-    while second_level_2_flag:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                second_level_2_flag = False
-        pygame.display.flip()
-
-    # Третий этап второго уровня
-    while second_level_3_flag:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                second_level_3_flag = False
-        pygame.display.flip()
+                second_level_flag = False
 
     # Концовка
     while final_window_flag:
