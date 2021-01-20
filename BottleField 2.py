@@ -741,6 +741,7 @@ clock = pygame.time.Clock()
 credits_FPS = 60
 
 # Игра
+pygame.mixer.music.play(-1, 0.0, 1500)
 running = True
 while running:
     for event in pygame.event.get():
@@ -766,9 +767,11 @@ while running:
                 info_window_flag = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    pop_sound.play()
                     start_window_flag = True
                     info_window_flag = False
         screen.blit(info_window_bg, (0, 0))
+        draw_text(info_text, screen, title_font, text_font, 40, 420, 30, 250, 150, 250, 600)
         pygame.display.flip()
 
     # Окно с достижениями
@@ -779,9 +782,14 @@ while running:
                 achievements_window_flag = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    pop_sound.play()
                     start_window_flag = True
                     achievements_window_flag = False
+            achievements_group.update(event)
         screen.blit(achievements_window_bg, (0, 0))
+        check_achievements()
+        achievements_group.draw(screen)
+        draw_text(achievements_window_text, screen, title_font, small_font, 30, 525, 100, 125, 300, 495, 650)
         pygame.display.flip()
 
     # Обучение для первого уровня
