@@ -194,6 +194,68 @@ class ResetAchievementsButton(UniversalSprite):
                     file.write("0")
 
 
+# Класс клетки поля для второго уровня, определяет изображение и свойства клетки
+class Tile(pygame.sprite.Sprite):
+    def __init__(self, tile_type, pos_x, pos_y):
+        global tiles_group, tile_width, tile_height, walls_group, larek_group, level_part_num, \
+            tile_images
+        super().__init__(tiles_group)
+        self.image = tile_images[tile_type]
+        self.rect = self.image.get_rect().move(570 + tile_width * pos_x, 10 + tile_height * pos_y)
+        if tile_type == "D" or tile_type == "U" or tile_type == "I" or tile_type == "R":
+            self.add(walls_group)
+        if tile_type == "F":
+            if level_part_num == 3:
+                self.image = pygame.image.load("data/PngFiles/SecondLevel/ValeraHouse.png")
+            self.add(larek_group)
+
+
+# Класс персонажа для второго уровня, определяет изображение персонажа, определяет
+# передвижение персонажа по карте
+class Player(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y):
+        global player_group, player_image, tile_width, tile_height
+        super().__init__(player_group)
+        self.image = player_image
+        self.rect = self.image.get_rect().move(570 + tile_width * pos_x, 10 + tile_height * pos_y)
+
+    def displacement(self, direction):
+        global player, steps_counter, walls_group, step, steps_counter, move_sound
+        old_position = (player.rect.x, player.rect.y)
+        if direction == 'up':
+            while not pygame.sprite.spritecollideany(player, walls_group):
+                player.rect.y -= step
+                if player.rect.y < -60:
+                    player.rect.y = -60
+                    break
+            player.rect.y += step
+        if direction == 'down':
+            while not pygame.sprite.spritecollideany(player, walls_group):
+                player.rect.y += step
+                if player.rect.y > 710:
+                    player.rect.y = 710
+                    break
+            player.rect.y -= step
+        if direction == 'left':
+            while not pygame.sprite.spritecollideany(player, walls_group):
+                player.rect.x -= step
+                if player.rect.x < 500:
+                    player.rect.x = 500
+                    break
+            player.rect.x += step
+        if direction == 'right':
+            while not pygame.sprite.spritecollideany(player, walls_group):
+                player.rect.x += step
+                if player.rect.x > 1270:
+                    player.rect.x = 1270
+                    break
+            player.rect.x -= step
+        new_position = (player.rect.x, player.rect.y)
+        if old_position != new_position:
+            move_sound.play()
+            steps_counter -= 1
+
+
 # Функция для отрисовывания многострочного текста
 def draw_text(full_text, screen_name, font1, font2, indent, title_x, title_y,
               text_x, text_y, exit_message_x, exit_message_y):
