@@ -176,6 +176,24 @@ class NextButton(UniversalSprite):
                     move_conveyor()
 
 
+class ResetAchievementsButton(UniversalSprite):
+    def __init__(self, group, image, x, y):
+        super().__init__(group, image, x, y)
+
+    def update(self, *args):
+        global achievements_window_flag, game_progress, pop_sound
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos) and achievements_window_flag:
+            if args[0].button == 1:
+                pop_sound.play()
+                with open("data/TxtFiles/Achievements.txt", "w", encoding="utf8") as file:
+                    file.write("000000")
+                reset_achievements_flags()
+                game_progress = 0
+                with open("data/TxtFiles/GameProgress.txt", "w", encoding="utf8") as file:
+                    file.write("0")
+
+
 # Функция для отрисовывания многострочного текста
 def draw_text(full_text, screen_name, font1, font2, indent, title_x, title_y,
               text_x, text_y, exit_message_x, exit_message_y):
