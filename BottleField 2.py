@@ -882,6 +882,15 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
                 second_level_text_flag = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    pop_sound.play()
+                    restart_second_level(1)
+                    second_level_flag = True
+                    second_level_text_flag = False
+        screen.blit(second_level_text_bg, (0, 0))
+        draw_text(second_level_text, screen, title_font, text_font, 35, 450, 15, 250, 120, 400, 625)
+        pygame.display.flip()
 
     # Второй уровень
     while second_level_flag:
