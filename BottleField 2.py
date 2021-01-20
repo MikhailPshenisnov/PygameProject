@@ -195,6 +195,29 @@ text_font = pygame.font.Font("data/Fonts/19363.ttf", 20)
 very_big_font = pygame.font.Font("data/Fonts/19363.ttf", 120)
 small_font = pygame.font.Font("data/Fonts/19363.ttf", 16)
 
+# Тексты
+# Основная информация
+with open("data/TxtFiles/Info.txt", "r", encoding="utf8") as text:
+    info_text = text.read().split("\n")
+# Достижения
+with open("data/TxtFiles/AchievementsText.txt", "r", encoding="utf8") as text:
+    achievements_window_text = text.read().split("\n")
+# Обучение для первого уровня
+with open("data/TxtFiles/FirstLevelTutorial.txt", "r", encoding="utf8") as text:
+    first_level_text = text.read().split("\n")
+# Game Over
+with open("data/TxtFiles/GameOverText.txt", "r", encoding="utf8") as text:
+    game_over_text = text.read().split("\n")
+# Обучение для второго уровня
+with open("data/TxtFiles/SecondLevelTutorial.txt", "r", encoding="utf8") as text:
+    second_level_text = text.read().split("\n")
+# Финальное послание
+with open("data/TxtFiles/FinalText.txt", "r", encoding="utf8") as text:
+    final_window_text = text.read().split("\n")
+# Текст титров
+with open("data/TxtFiles/CreditsText.txt", "r", encoding="utf8") as text:
+    credits_text = text.read().split("\n")
+
 # Игра
 running = True
 while running:
