@@ -176,6 +176,7 @@ class NextButton(UniversalSprite):
                     move_conveyor()
 
 
+# Кнопка сбрасывает достижения, прогресс и флаги достижений
 class ResetAchievementsButton(UniversalSprite):
     def __init__(self, group, image, x, y):
         super().__init__(group, image, x, y)
@@ -489,7 +490,7 @@ def give_achievement(ach_num):
         file.write("".join(text))
 
 
-#
+# Обновляет флаги достижений
 def update_achievements_flags():
     global no_death_flag, no_damage_flag
     with open("data/TxtFiles/AchievementsFlags.txt", "w", encoding="utf8") as file:
@@ -530,7 +531,7 @@ def check_achievements():
                 achievement_6.image = pygame.image.load("data/PngFiles/Achievements/Ach6BW.png")
 
 
-#
+# Сбрасывает флаги достижений и достижения
 def reset_achievements_flags():
     global no_death_flag, no_damage_flag
     with open("data/TxtFiles/AchievementsFlags.txt", "w", encoding="utf8") as file:
